@@ -2,8 +2,7 @@
 ### 🍎 Game Title: BodyQuest
 
 **Genre:** Simulation / Educational Adventure / Health Awareness
-**Team Members:** Itzhak Bista (and collaborators)
-**Repository Link:** [Wiki Page with Formal Elements](./elements-formal.md)
+**Team Members:** Itzhak Bista, Adir Ofir
 
 ### 🕹️ Short Description
 
