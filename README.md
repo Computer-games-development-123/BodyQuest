@@ -3,6 +3,7 @@
 
 **Genre:** Simulation / Educational Adventure / Health Awareness
 **Team Members:** Itzhak Bista, Adir Ofir
+**Repository Link:** [Wiki Page with Formal Elements](https://github.com/Computer-games-development-123/BodyQuest/wiki/Formal-Elements-and-Market-Research)
 
 ### 🕹️ Short Description
 
