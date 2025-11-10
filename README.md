@@ -1,4 +1,7 @@
 # BodyQuest
+
+<img width="1024" height="1536" alt="body quest" src="https://github.com/user-attachments/assets/409813ba-6a00-4085-9503-f729d2ead457" />
+
 ### 🍎 Game Title: BodyQuest
 
 **Genre:** Simulation / Educational Adventure / Health Awareness
