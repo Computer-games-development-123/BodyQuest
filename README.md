@@ -2,76 +2,193 @@
 
 <img width="1024" height="1536" alt="body quest" src="https://github.com/user-attachments/assets/409813ba-6a00-4085-9503-f729d2ead457" />
 
-### 🍎 Game Title: BodyQuest
-
-**Genre:** Simulation / Educational Adventure / Health Awareness
-**Team Members:** Itzhak Bista, Adir Ofir
-**Repository Link:** [Wiki Page with Formal Elements](https://github.com/Computer-games-development-123/BodyQuest/wiki/Formal-Elements-and-Market-Research)
-
-### 🕹️ Short Description
-
-BodyQuest is an interactive simulation game where players embark on an adventure inside the human body. You control a small, friendly explorer who travels through organs, arteries, and systems — trying to keep the body healthy by balancing food, exercise, and rest.
-Your decisions determine how the body reacts: eat junk food and your energy drops, sleep too little and focus fades, keep an active lifestyle and the body becomes stronger.
-
-The goal isn’t to preach about health, but to make learning about it fun and natural through gameplay.
-
-### 💡 Key Features
-
-* A living 3D world inside the human body.
-* Dynamic health stats that change based on your decisions.
-* Mini-games for digestion, heart rate balance, and exercise.
-* Educational content disguised as gameplay challenges.
-
-### 🧠 Learning Objective
-
-To teach healthy habits and body awareness through interactive choices and consequences, without overt instructions or lessons.
+## 🎮 Game Title: BodyQuest
+**Genre:** Simulation / Educational Adventure / Health Awareness  
+**Team Members:** Itzhak Bista, Adir Ofir  
+**Wiki Link:** https://github.com/Computer-games-development-123/BodyQuest/wiki/Formal-Elements-and-Market-Research
 
 ---
 
-## elements-formal.md
+# 1. Game Overview
+BodyQuest is an educational adventure set inside the human body.  
+You control a tiny explorer navigating organs and biological systems while collecting healthy items, avoiding viruses, and managing **Health**, **Energy**, and **Mood**.
 
-### 1. **Game Concept**
+Your goal is to survive, make healthy decisions, and see how choices affect the body in real time.
 
-BodyQuest transforms the human body into an explorable world. The player’s mission is to help the body maintain balance — ensuring that nutrients, energy, and rest are properly managed. The game combines biology concepts with fun tasks and decision-making, encouraging curiosity and self-learning.
+---
 
-### 2. **Gameplay Mechanics**
+# 2. Core Loop (Prototype)
 
-* **Core Loop:** Explore → Make daily health choices → Observe body reactions → Complete organ challenges → Level up.
-* **Player Stats:**
+**Explore → Collect Items → Stats Change → Survive Timer → Win / Lose**
 
-  * **Energy:** affected by sleep, food, and exercise.
-  * **Mood:** impacted by sugar levels and stress.
-  * **Health Bar:** represents the body’s general state; improves with balanced choices.
+### Player Actions:
+- Move through a 2D “organ” environment  
+- Collect:  
+  - **HealthyFood** → Increases Health & Energy  
+  - **JunkFood** → Gives Energy boost but lowers Health & Mood  
+  - **Virus** → Damages Health & lowers Mood  
+- Watch stats change in real time  
+- Survive until timer ends → **Win**  
+- Health reaches 0 → **Game Over**
 
-### 3. **Game Systems and Challenges**
+---
 
-* **Food Selection:** choose between fast food, fruits, or balanced meals. Each affects digestion speed and energy.
-* **Exercise Missions:** mini-games like running through veins (to boost circulation) or stretching muscles in rhythm.
-* **Sleep Cycles:** the player must schedule rest to avoid “body fatigue” events.
-* **Infection Events:** bacteria and viruses appear as small enemies that can only be defeated if your immune level is high.
+# 3. Player Stats System
 
-### 4. **Aesthetic and Art Style**
+| Stat   | Description | Affected By |
+|--------|-------------|-------------|
+| **Health** | Overall health status | HealthyFood, JunkFood, Virus |
+| **Energy** | Energy level | Food items |
+| **Mood** | Emotional state | JunkFood, Virus |
 
-* 3D or 2.5D environment with glowing colors and fluid motion.
-* Each organ is a unique biome (e.g., Heart = factory, Brain = control room, Stomach = bubbling lava pit).
-* Soundtrack changes based on health state — calm when healthy, tense when unhealthy.
+Stats are clamped between **0–100** and displayed via UI sliders.
 
-### 5. **Examples of Game Processes**
+---
 
-* **Process 1 – The Sugar Rush:** After eating too many sweets, the body speeds up but crashes quickly. The player must stabilize sugar levels by finding “fiber zones.”
-* **Process 2 – Sleep Recovery:** Completing a puzzle mini-game helps the body “recharge” and restore focus.
-* **Process 3 – Virus Attack:** A timed event where immune cells must be guided to fight bacteria — a mix of action and strategy.
+# 4. Technical Architecture (Unity)
 
-### 6. **Market Research**
+## Project Structure
+```
+Assets/
+  Scenes/
+    BodyQuest_Prototype.unity
 
-* Similar Games: *Human: Fall Flat (tone)*, *Spore (biological exploration)*, *Plague Inc. (body systems)*, *Kerbal EDU*.
-* Target Audience: Teens and young adults who enjoy casual simulation games with a meaningful twist.
-* Unique Value: Merges science learning with gamified decision-making and emotional feedback.
+  Scripts/
+    Player/
+      PlayerController.cs
+      PlayerStats.cs
 
-### 7. **Learning Integration**
+    World/
+      HealthyFood.cs
+      JunkFood.cs
+      Virus.cs
 
-Learning is built into the player’s curiosity — not through text or lectures.
+    Managers/
+      GameManager.cs
+      UIManager.cs
+      SpawnManager.cs
 
-* Players discover cause and effect (e.g., unhealthy choices lead to fatigue).
-* Encourages experimentation: “What happens if I skip breakfast?”
-* Reinforces the idea of balance rather than perfection.
+  Prefabs/
+    Player.prefab
+    HealthyFood.prefab
+    JunkFood.prefab
+    Virus.prefab
+```
+
+## UI System
+- Health / Energy / Mood sliders  
+- Timer text  
+- Win Panel  
+- Game Over Panel  
+
+---
+
+# 5. UML (Text Diagram)
+
+```
+                   ┌──────────────────┐
+                   │   GameManager    │
+                   ├──────────────────┤
+                   │ - state          │
+                   │ - levelTimer     │
+                   ├──────────────────┤
+                   │ + Win()          │
+                   │ + GameOver()     │
+                   │ + RestartLevel() │
+                   └───────▲──────────┘
+                           │
+                           │ uses
+                           │
+┌──────────────────┐   ┌──────────────────┐
+│    UIManager     │   │   PlayerStats    │
+├──────────────────┤   ├──────────────────┤
+│ - healthBar      │   │ + Health         │
+│ - energyBar      │   │ + Energy         │
+│ - moodBar        │   │ + Mood           │
+├──────────────────┤   ├──────────────────┤
+│ + UpdateStats()  │   │ + AddHealth()    │
+└──────────────────┘   │ + AddEnergy()    │
+                       │ + AddMood()      │
+                       │ + IsDead()       │
+                       └─────▲────────────┘
+                             │
+                             │ affected by pickups
+
+         ┌────────────────────────────────────────────────────┐
+         │                   Pickup Objects                    │
+         └────────────────────────────────────────────────────┘
+        ┌──────────────────┐ ┌────────────────────┐ ┌──────────────────┐
+        │  HealthyFood     │ │     JunkFood       │ │      Virus       │
+        ├──────────────────┤ ├────────────────────┤ ├──────────────────┤
+        │ + OnTrigger...   │ │ + OnTrigger...     │ │ + OnTrigger...   │
+        │ → AddHealth      │ │ → AddEnergy        │ │ → AddHealth(-)   │
+        │ → AddEnergy      │ │ → AddMood(-)       │ │ → AddMood(-)     │
+        └──────────────────┘ └────────────────────┘ └──────────────────┘
+
+                    ┌──────────────────┐
+                    │ PlayerController │
+                    ├──────────────────┤
+                    │ Reads input      │
+                    │ Moves Rigidbody2D│
+                    └──────────────────┘
+```
+
+---
+
+# 6. Implemented Prototype Features
+
+### ✔ Player Controller  
+2D movement using Rigidbody2D.
+
+### ✔ Stats System  
+Health / Energy / Mood updating live.
+
+### ✔ Pickup Mechanics  
+HealthyFood, JunkFood, Virus with unique effects.
+
+### ✔ UI  
+Bars + Timer + Win/Game Over panels.
+
+### ✔ Game Flow  
+- Survive timer = Win  
+- Health 0 = Game Over  
+
+### ✔ Spawn System (Optional)  
+Random spawning of pickups over time.
+
+---
+
+# 7. How to Run
+
+1. Open **Unity (2022 or newer)**.  
+2. Open project directory:  
+   ```
+   BodyQuestGame/
+   ```  
+3. Load the scene:  
+   ```
+   Assets/Scenes/BodyQuest_Prototype.unity
+   ```  
+4. Press **Play**.  
+5. Move with **Arrow Keys**.
+
+---
+
+# 8. Future Development
+
+Features planned but not included in prototype:
+
+- Multi-organ environments (Heart, Brain, Stomach…)  
+- Mini-games (digestion, sleep cycle, exercise challenges)  
+- Immune system mechanics  
+- Infection waves & advanced enemies  
+- XP + leveling  
+- 2.5D / 3D visual upgrade  
+- Story mode & quests  
+
+---
+
+# 9. Summary
+
+BodyQuest’s prototype includes a full Core Loop, stat-based gameplay, feedback through UI, pickups, win/lose flow, and modular system design—ready for expansion into a full educational adventure.
+
