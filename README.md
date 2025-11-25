@@ -6,7 +6,7 @@
 **Genre:** Simulation / Educational Adventure / Health Awareness  
 **Team Members:** Itzhak Bista, Adir Ofir  
 **Wiki Link:** https://github.com/Computer-games-development-123/BodyQuest/wiki/Formal-Elements-and-Market-Research
-** Itch.io Link :** https://imrfatty.itch.io/body-quest
+**Itch.IO Link:** https://imrfatty.itch.io/body-quest
 
 ---
 
